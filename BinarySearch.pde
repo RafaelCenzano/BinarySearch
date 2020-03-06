@@ -24,21 +24,56 @@ private Item[] store =
 public int linearSearch(int catNumToFind)
 {
   //complete this method
+  for(int i = 0; i < store.length; i++){
+    if(store[i].getCatNum() == catNumToFind){
+      return store[i].getInventory();
+    }
+  }
   return -1;
 }
 public int recursiveLinearSearch(int catNumToFind, int startIndex)
 {
   //complete this method
-  return -1;
+  if(startIndex == store.length){
+    return -1;
+  }
+  if(store[startIndex].getCatNum() == catNumToFind){
+    return store[startIndex].getInventory();
+  }
+  return recursiveLinearSearch(catNumToFind, startIndex + 1);
 }
 public int binarySearch(int catNumToFind)
 {
-  //complete this method    
+  //complete this method
+  int count = 0;
+  int max = store.length - 1;
+  int min = 0;
+  while(min <= max){
+    count++;
+    int calculated = min + ((max - min) / 2);
+    if(store[calculated].getCatNum() == catNumToFind){
+      return store[calculated].getInventory();
+    }else if(store[calculated].getCatNum() > catNumToFind){
+      max = calculated - 1;
+    }else{
+      min = calculated + 1;
+    }
+  }
   return -1;
 }
 public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
 {
-  //complete this method    
+  //complete this method
+  if(nLow <= nHigh){
+    int calculated = nLow + ((nHigh - nLow) / 2);
+    if(store[calculated].getCatNum() == catNumToFind){
+      return store[calculated].getInventory();
+    }else if(store[calculated].getCatNum() < catNumToFind){
+      return recursiveBinarySearch(catNumToFind, calculated + 1, nHigh);
+    }else{
+      return recursiveBinarySearch(catNumToFind, nLow, calculated - 1);
+    }
+  }
   return -1;
 }
 public void setup()
@@ -51,9 +86,9 @@ public void setup()
   {
 
     if (linearSearch(tests[i]) != -1)
-      System.out.println("Catalog #"+tests[i]+" has "+linearSearch(tests[i]) + " in stock");
+      System.out.println("Catalog #" + tests[i] + " has " + linearSearch(tests[i]) + " in stock");
     else
-      System.out.println("Catalog #"+tests[i]+" not found");
+      System.out.println("Catalog #" + tests[i] + " not found");
   }
   System.out.println();
   System.out.println("Testing Recursive Linear Search");
@@ -96,7 +131,48 @@ public void draw()
 }
 
 
+// OUTPUT:
 
+/*
+Testing Non-Recursive Linear Search
+=====================
+Catalog #0 not found
+Catalog #183 not found
+Catalog #184 has 14 in stock
+Catalog #2370 has 65 in stock
+Catalog #15320 has 82 in stock
+Catalog #19967 has 45 in stock
+Catalog #19968 not found
 
+Testing Recursive Linear Search
+=====================
+Catalog #0 not found
+Catalog #183 not found
+Catalog #184 has 14 in stock
+Catalog #2370 has 65 in stock
+Catalog #15320 has 82 in stock
+Catalog #19967 has 45 in stock
+Catalog #19968 not found
+
+Testing Non-Recursive Binary Search
+===================================
+Catalog #0 not found
+Catalog #183 not found
+Catalog #184 has 14 in stock
+Catalog #2370 has 65 in stock
+Catalog #15320 has 82 in stock
+Catalog #19967 has 45 in stock
+Catalog #19968 not found
+
+Testing Recursive Binary Search
+===============================
+Catalog #0 not found
+Catalog #183 not found
+Catalog #184 has 14 in stock
+Catalog #2370 has 65 in stock
+Catalog #15320 has 82 in stock
+Catalog #19967 has 45 in stock
+Catalog #19968 not found
+*/
 
 
